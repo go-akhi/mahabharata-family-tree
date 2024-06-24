@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1200px;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "Kuru", "label": "Kuru", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Shantanu", "label": "Shantanu", "shape": "dot", "size": 10}, {"color": "pink", "id": "Ganga", "label": "Ganga", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Bhishma", "label": "Bhishma", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Vichitravirya", "label": "Vichitravirya", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Dasa", "label": "Dasa", "shape": "dot", "size": 10}, {"color": "pink", "id": "Satyavati", "label": "Satyavati", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Vyasa", "label": "Vyasa", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Prasara", "label": "Prasara", "shape": "dot", "size": 10}, {"color": "pink", "id": "Ambika", "label": "Ambika", "shape": "dot", "size": 10}, {"color": "pink", "id": "Ambalika", "label": "Ambalika", "shape": "dot", "size": 10}, {"color": "pink", "id": "Shudri", "label": "Shudri", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Vidura", "label": "Vidura", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Dhritarashtra", "label": "Dhritarashtra", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Pandu", "label": "Pandu", "shape": "dot", "size": 10}, {"color": "pink", "id": "Gandhari", "label": "Gandhari", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Duryodhana and the Kauravas", "label": "Duryodhana and the Kauravas", "shape": "dot", "size": 10}, {"color": "pink", "id": "Madri", "label": "Madri", "shape": "dot", "size": 10}, {"color": "pink", "id": "Kunti", "label": "Kunti", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Nakul", "label": "Nakul", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Sahdev", "label": "Sahdev", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Karna", "label": "Karna", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Yudhishthira", "label": "Yudhishthira", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Bhima", "label": "Bhima", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Arjuna", "label": "Arjuna", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Surya", "label": "Surya", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Dharma", "label": "Dharma", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Vayu", "label": "Vayu", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Indra", "label": "Indra", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Arjun", "label": "Arjun", "shape": "dot", "size": 10}, {"color": "pink", "id": "Draupadi", "label": "Draupadi", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Sutasoma", "label": "Sutasoma", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Srutakirti", "label": "Srutakirti", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Abhimanyu", "label": "Abhimanyu", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Iravan", "label": "Iravan", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Babhruvahana", "label": "Babhruvahana", "shape": "dot", "size": 10}, {"color": "pink", "id": "Subhadra", "label": "Subhadra", "shape": "dot", "size": 10}, {"color": "pink", "id": "Ulupi", "label": "Ulupi", "shape": "dot", "size": 10}, {"color": "pink", "id": "Chitrangada", "label": "Chitrangada", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Nakula", "label": "Nakula", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Satatika", "label": "Satatika", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Prativindhya", "label": "Prativindhya", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Srutakarma", "label": "Srutakarma", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Yudhushthira", "label": "Yudhushthira", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Sahadeva", "label": "Sahadeva", "shape": "dot", "size": 10}, {"color": "pink", "id": "Uttara", "label": "Uttara", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Parikchit", "label": "Parikchit", "shape": "dot", "size": 10}, {"color": "pink", "id": "Iravati", "label": "Iravati", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Janamejay", "label": "Janamejay", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "Kuru", "label": "6 Generations", "to": "Shantanu", "width": 1}, {"color": "red", "from": "Shantanu", "to": "Ganga", "width": 1}, {"from": "Shantanu", "to": "Bhishma", "width": 1}, {"from": "Shantanu", "to": "Vichitravirya", "width": 1}, {"from": "Dasa", "to": "Satyavati", "width": 1}, {"color": "red", "from": "Satyavati", "to": "Shantanu", "width": 1}, {"from": "Satyavati", "to": "Vichitravirya", "width": 1}, {"from": "Satyavati", "to": "Vyasa", "width": 1}, {"color": "red", "from": "Prasara", "to": "Satyavati", "width": 1}, {"from": "Prasara", "to": "Vyasa", "width": 1}, {"from": "Ganga", "to": "Bhishma", "width": 1}, {"color": "red", "from": "Vichitravirya", "to": "Ambika", "width": 1}, {"color": "red", "from": "Vichitravirya", "to": "Ambalika", "width": 1}, {"color": "red", "from": "Vyasa", "to": "Shudri", "width": 1}, {"color": "red", "from": "Vyasa", "to": "Ambika", "width": 1}, {"color": "red", "from": "Vyasa", "to": "Ambalika", "width": 1}, {"from": "Vyasa", "to": "Vidura", "width": 1}, {"from": "Vyasa", "to": "Dhritarashtra", "width": 1}, {"from": "Vyasa", "to": "Pandu", "width": 1}, {"from": "Shudri", "to": "Vidura", "width": 1}, {"from": "Ambika", "to": "Dhritarashtra", "width": 1}, {"from": "Ambalika", "to": "Pandu", "width": 1}, {"color": "red", "from": "Dhritarashtra", "to": "Gandhari", "width": 1}, {"from": "Dhritarashtra", "to": "Duryodhana and the Kauravas", "width": 1}, {"color": "red", "from": "Pandu", "to": "Madri", "width": 1}, {"color": "red", "from": "Pandu", "to": "Kunti", "width": 1}, {"from": "Pandu", "to": "Nakul", "width": 1}, {"from": "Pandu", "to": "Sahdev", "width": 1}, {"from": "Madri", "to": "Nakul", "width": 1}, {"from": "Madri", "to": "Sahdev", "width": 1}, {"from": "Kunti", "to": "Karna", "width": 1}, {"from": "Kunti", "to": "Yudhishthira", "width": 1}, {"from": "Kunti", "to": "Bhima", "width": 1}, {"from": "Kunti", "to": "Arjuna", "width": 1}, {"from": "Gandhari", "to": "Duryodhana and the Kauravas", "width": 1}, {"color": "red", "from": "Surya", "to": "Kunti", "width": 1}, {"from": "Surya", "to": "Karna", "width": 1}, {"color": "red", "from": "Dharma", "to": "Kunti", "width": 1}, {"from": "Dharma", "to": "Yudhishthira", "width": 1}, {"color": "red", "from": "Vayu", "to": "Kunti", "width": 1}, {"from": "Vayu", "to": "Bhima", "width": 1}, {"color": "red", "from": "Indra", "to": "Kunti", "width": 1}, {"from": "Indra", "to": "Arjun", "width": 1}, {"color": "red", "from": "Yudhishthira", "to": "Draupadi", "width": 1}, {"color": "red", "from": "Bhima", "to": "Draupadi", "width": 1}, {"from": "Bhima", "to": "Sutasoma", "width": 1}, {"from": "Arjuna", "to": "Srutakirti", "width": 1}, {"from": "Arjuna", "to": "Abhimanyu", "width": 1}, {"from": "Arjuna", "to": "Iravan", "width": 1}, {"from": "Arjuna", "to": "Babhruvahana", "width": 1}, {"color": "red", "from": "Arjun", "to": "Draupadi", "width": 1}, {"color": "red", "from": "Arjun", "to": "Subhadra", "width": 1}, {"color": "red", "from": "Arjun", "to": "Ulupi", "width": 1}, {"color": "red", "from": "Arjun", "to": "Chitrangada", "width": 1}, {"color": "red", "from": "Sahdev", "to": "Draupadi", "width": 1}, {"color": "red", "from": "Nakula", "to": "Draupadi", "width": 1}, {"from": "Nakula", "to": "Satatika", "width": 1}, {"from": "Draupadi", "to": "Prativindhya", "width": 1}, {"from": "Draupadi", "to": "Sutasoma", "width": 1}, {"from": "Draupadi", "to": "Srutakarma", "width": 1}, {"from": "Draupadi", "to": "Satatika", "width": 1}, {"from": "Draupadi", "to": "Srutakirti", "width": 1}, {"from": "Yudhushthira", "to": "Prativindhya", "width": 1}, {"from": "Sahadeva", "to": "Srutakarma", "width": 1}, {"from": "Subhadra", "to": "Abhimanyu", "width": 1}, {"from": "Ulupi", "to": "Iravan", "width": 1}, {"from": "Chitrangada", "to": "Babhruvahana", "width": 1}, {"color": "red", "from": "Abhimanyu", "to": "Uttara", "width": 1}, {"from": "Abhimanyu", "to": "Parikchit", "width": 1}, {"from": "Uttara", "to": "Parikchit", "width": 1}, {"color": "red", "from": "Parikchit", "to": "Iravati", "width": 1}, {"from": "Parikchit", "to": "Janamejay", "width": 1}, {"from": "Iravati", "to": "Janamejay", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
