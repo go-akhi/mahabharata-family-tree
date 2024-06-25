@@ -55,8 +55,9 @@ females=["Satyavati","Ganga","Ambika","Ambalika","Shudri","Madri","Kunti","Gandh
 for lady in females:
     G.nodes[lady]["color"]="pink"
 
+nx.write_gml(G, "mahabharata.gml")
 
-nt = Network("800px","1200px")
+nt = Network(directed=True)
 nt.from_nx(G)
-nt.show('nx.html', notebook=False)
+#nt.show('nx.html', notebook=False)
 
